@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)file:///Users/ebiharashun/dairy.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>日記サイト</title>
+
+<style>
+body{
+  font-family:sans-serif;
+  max-width:600px;
+  margin:auto;
+}
+
+textarea{
+  width:100%;
+  height:100px;
+}
+
+.diary{
+  border:1px solid #ccc;
+  padding:10px;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>日記</h1>
+
+<textarea id="text"></textarea>
+<br>
+<button onclick="saveDiary()">保存</button>
+
+<h2>日記一覧</h2>
+<div id="list">
+    <div class="diary">
+      <div>2026/3/12 22:38:42</div>
+      <div>3/10
+イヤホンを買いに行っている途中から周りが怖くなった。対象が限局化されていない感じ。呼吸が苦しい。頭の中で色々なこえや音楽が流れている。猫の鳴き声や父親の声、アニメのキャラクターの声など。</div>
+    </div>
+    </div>
+
+<script>
+
+function saveDiary(){
+
+  const text = document.getElementById("text").value
+
+  let diaries = JSON.parse(localStorage.getItem("diaries")) || []
+
+  diaries.push({
+    text:text,
+    date:new Date().toLocaleString()
+  })
+
+  localStorage.setItem("diaries",JSON.stringify(diaries))
+
+  document.getElementById("text").value=""
+
+  showDiary()
+}
+
+function showDiary(){
+
+  const list = document.getElementById("list")
+
+  let diaries = JSON.parse(localStorage.getItem("diaries")) || []
+
+  list.innerHTML=""
+
+  diaries.reverse().forEach(d => {
+
+    list.innerHTML += `
+    <div class="diary">
+      <div>${d.date}</div>
+      <div>${d.text}</div>
+    </div>
+    `
+  })
+}
+
+showDiary()
+
+</script>
+
+
+</body></html>
